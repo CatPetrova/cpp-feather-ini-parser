@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <map>
 #include <vector>
+#include <iostream>
 
 #ifndef FINI_WIDE_SUPPORT
   typedef std::stringstream fini_sstream_t;
@@ -145,6 +146,10 @@ INI:: ~INI() {
 }
 
 void INI::clear() {
+  for (std::pair<fini_string_t, keys_t*> section : sections) {
+    delete section.second;
+    section.second = nullptr;
+  }
   sections.clear();
 }
 
@@ -316,6 +321,7 @@ bool INI::select(fini_string_t section, bool noCreate) {
 }
 
 fini_string_t INI::get(fini_string_t section, fini_string_t key, fini_string_t def) {
+  select(section);
   return get(key, def);
 }
 
