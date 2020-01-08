@@ -1,5 +1,13 @@
 #include "stdAfx.h"
 #include "INI.h"
+#include <codecvt>
+#include <locale>
+
+#ifndef FINI_WIDE_SUPPORT
+std::ostream &fini_err = std::cerr;
+#else
+std::wostream &fini_err = std::wcerr;
+#endif
 
 fini_string_t& l_trim(fini_string_t& str, const fini_string_t trim_chars = _T("\t\v\f; ")) {
   str.erase(0, str.find_first_not_of(trim_chars)); return str;
@@ -68,6 +76,8 @@ bool INI::parse(int parseFlags) {
   {
   case SOURCE_FILE: {
     fini_ifstream_t file(filename);
+    std::locale loc(std::locale(), new std::codecvt_utf8_utf16<wchar_t>);
+    file.imbue(loc);
 
     if (!file.is_open())
       return false;

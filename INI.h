@@ -22,14 +22,12 @@
   typedef char fini_char_t;
   typedef std::ifstream fini_ifstream_t;
   typedef std::ofstream fini_ofstream_t;
-  std::ostream &fini_err = std::cerr;
 #else
   typedef std::wstringstream fini_sstream_t;
   typedef std::wstring fini_string_t;
   typedef wchar_t fini_char_t;
   typedef std::wifstream fini_ifstream_t;
   typedef std::wofstream fini_ofstream_t;
-  std::wostream &fini_err = std::wcerr;
 #endif
 
 
